@@ -1,0 +1,14 @@
+services:
+  chromadb:
+    image: chromadb/chroma:1.5.9
+    container_name: ai-chatbot-chroma
+    ports:
+      - "8000:8000"
+    volumes:
+      # Персистентное хранилище индекса (переживает перезапуск контейнера)
+      - ./chroma_data:/data
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/data
+      - ANONYMIZED_TELEMETRY=FALSE
+    restart: unless-stopped
